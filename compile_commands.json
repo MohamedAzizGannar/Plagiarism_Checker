@@ -1,0 +1,17 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/main.o",
+      "src/main.c"
+    ],
+    "directory": "/Users/mohamedazizgannar/Projects/Programs/School_projects/C_Projects/Plagiarism_Detector",
+    "file": "/Users/mohamedazizgannar/Projects/Programs/School_projects/C_Projects/Plagiarism_Detector/src/main.c",
+    "output": "/Users/mohamedazizgannar/Projects/Programs/School_projects/C_Projects/Plagiarism_Detector/build/main.o"
+  }
+]
