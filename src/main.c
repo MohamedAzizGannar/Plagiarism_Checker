@@ -2,6 +2,8 @@
 #include <DistanceCalculator.h>
 #include <FileHandler.h>
 #include <Preprocessor.h>
+#include <Coupler.h>
+
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -52,7 +54,17 @@ int main(int argc, char **argv) {
 
   for (int i = 0; i < file1Size; i++) {
     for (int j = 0; j < file2Size; j++) {
-      printf("%f ", diceDistanceMatrix[i][j]);
+      printf("%.2f ", diceDistanceMatrix[i][j]);
+    }
+    printf("\n");
+  }
+
+
+	coupler(file1Size, file2Size,diceDistanceMatrix);
+
+  for (int i = 0; i < file1Size; i++) {
+    for (int j = 0; j < file2Size; j++) {
+      printf("%.2f ", diceDistanceMatrix[i][j]);
     }
     printf("\n");
   }

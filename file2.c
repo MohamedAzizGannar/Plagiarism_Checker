@@ -1,74 +1,61 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
-#define ARRAY_SIZE 10
+#define STUDENTS 5
+#define SUBJECTS 3
+#define MAXNAME 24
 
-void fill_array(int *arr, int size) {
-    for (int i = 0; i < size; i++) {
-        arr[i] = rand() % 100;
+typedef struct {
+    char fullname[MAXNAME];
+    int marks[SUBJECTS];
+    float average;
+} Pupil;
+
+/* helper to average integer marks (same integer-sum style) */
+float avg_marks(int m[], int mcount) {
+    int total = 0;
+    for (int k = 0; k < mcount; ++k) {
+        total += m[k];
     }
+    return (float)total / mcount;
 }
 
-void print_array(const int *arr, int size) {
-    for (int i = 0; i < size; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-}
-
-void bubble_sort(int *arr, int size) {
-    for (int i = 0; i < size - 1; i++) {
-        for (int j = 0; j < size - i - 1; j++) {
-            if (arr[j] > arr[j + 1]) {
-                int tmp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = tmp;
-            }
-        }
-    }
-}
-
-int string_count_vowels(const char *str) {
-    int count = 0;
-    for (int i = 0; str[i]; i++) {
-        char c = str[i];
-        if (c == 'a' || c == 'e' || c == 'i' ||
-            c == 'o' || c == 'u' ||
-            c == 'A' || c == 'E' ||
-            c == 'I' || c == 'O' || c == 'U') {
-            count++;
-        }
-    }
-    return count;
-}
-
-double average(const int *arr, int size) {
-    if (size == 0) return 0.0;
-    int sum = 0;
-    for (int i = 0; i < size; i++) sum += arr[i];
-    return (double) sum / size;
-}
-
+/* main: identical dataset and flow but with renamed identifiers and reordered prints */
 int main() {
-    int numbers[ARRAY_SIZE];
-    fill_array(numbers, ARRAY_SIZE);
+    Pupil class[STUDENTS] = {
+        {"Marin", {78, 82, 91}, 0.0f},
+        {"Sofia", {88, 79, 85}, 0.0f},
+        {"Jonas", {58, 64, 70}, 0.0f},
+        {"Lea",   {95, 93, 99}, 0.0f},
+        {"Omar",  {72, 76, 74}, 0.0f}
+    };
 
-    printf("Original array:\n");
-    print_array(numbers, ARRAY_SIZE);
+    /* calculate averages */
+    for (int idx = 0; idx < STUDENTS; ++idx) {
+        class[idx].average = avg_marks(class[idx].marks, SUBJECTS);
+    }
 
-    bubble_sort(numbers, ARRAY_SIZE);
-    printf("Sorted array:\n");
-    print_array(numbers, ARRAY_SIZE);
+    /* pick best (same tie-handling behavior) */
+    int top = 0;
+    for (int j = 1; j < STUDENTS; ++j) {
+        if (class[j].average > class[top].average) {
+            top = j;
+        }
+    }
 
-    printf("Average value: %.2f\n", average(numbers, ARRAY_SIZE));
+    /* print header then rows (header formatting slightly different spacing) */
+    printf("Name     M1 M2 M3 | Average\n");
+    printf("-------------------------\n");
+    for (int r = 0; r < STUDENTS; ++r) {
+        printf("%-8s %2d %2d %2d | %.2f\n",
+               class[r].fullname,
+               class[r].marks[0],
+               class[r].marks[1],
+               class[r].marks[2],
+               class[r].average);
+    }
 
-    const char *text = "Artificial intelligence is fascinating.";
-    printf("Text: \"%s\"\n", text);
-    printf("Vowel count: %d\n", string_count_vowels(text));
-
-    printf("Square root of 81 is %.2f\n", sqrt(81.0));
+    printf("\nTop pupil is %s with %.2f points\n", class[top].fullname, class[top].average);
 
     return 0;
 }
